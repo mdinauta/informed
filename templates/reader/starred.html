@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load endless %}
+
+{% block sidebar %}
+	{% for feed in feeds_for_topics %}
+		<li><a href="/topic/{{ feed.topic }}">{{ feed.topic }}</a></li>
+	{% endfor %}
+
+{% endblock %}
+
+
+{% block reader %}
+	{% paginate articles %}
+	{% for article in articles %}
+			<div class='article'>
+				{% if article.starred == True %}
+					<a href='/star-article/{{ article.id }}' id='starred_article'><i class='icon-star'></i></a>
+				{% else %}
+					<a href='/star-article/{{ article.id }}' id='not_starred_article'><i class='icon-star-empty'></i></a>
+				{% endif %}
+				<li class='feed_title'>{{ article.feed_title }}</li>
+				{% if article.title|length < 60 %}
+				    <a href="{{ article.url }}" class='article_title'>{{ article.title }}</a>
+			    {% else %}
+    			    <a href="{{ article.url }}" class='article_title'>{{ article.title|slice:"60" }}...</a>
+    			{% endif %}
+				<p class='published_date'>{{ article.published_date }}</p>
+			</div>
+	{% endfor %}
+
+	{% if pages|length < 6 %}
+		{% show_pages %}
+	{% else %}
+		{% get_pages %}
+		{{ pages.first }} {{ pages.previous }} {{ pages.next }} {{ pages.last }}
+	{% endif %}
+
+{% endblock %}

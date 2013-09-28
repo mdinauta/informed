@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block reader %}
+	{% for feed_title, link, title, date in articles %}
+			<li> {{ feed_title }} </li>
+			<p>{{ date }}</p>
+		    <a href="{{ link }}">{{title}}</a>
+		    <p></p>
+	{% endfor %}
+{% endblock %}

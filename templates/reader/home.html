@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+	{% for feed in feeds_for_topics %}
+		<li><a href="/topic/{{ feed.topic }}">{{ feed.topic }}</a></li>
+	{% endfor %}
+	{% if starred_articles %}
+		<li><a href="/topic/starred/">starred</a></li>
+	{% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<h3>informed.io is a minimal feed aggregator.</h3>
+<p>Click on a topic on the left to view pre-curated feeds. <a href="/accounts/signup/">Sign up</a> to add your own.</p>
+
+{% endblock %}

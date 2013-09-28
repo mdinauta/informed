@@ -1,0 +1,18 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% trans "Account setup" %}{% endblock %}
+
+{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+
+{% block content %}
+
+<form action="" enctype="multipart/form-data" method="post">
+  <ul id="box-nav">
+      <li><a href="{% url 'manage-feeds' %}">{% trans "Manage feeds" %}</a></li>
+      <li><a href="{% url 'userena_password_change' user.username %}">{% trans "Change password" %}</a></li>
+      <li><a href="{% url 'userena_email_change' user.username %}">{% trans "Change email" %}</a></li>
+  </ul>
+
+{% endblock %}

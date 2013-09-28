@@ -1,0 +1,4 @@
+Django==1.4.3
+gondor==1.2.2
+psycopg2==2.4.6
+gunicorn==0.17.2
