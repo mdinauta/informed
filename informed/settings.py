@@ -2,10 +2,8 @@
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
-# there is a problem with this
-# at the moment it is looking at /Users/mattdinauta/proj/informed/informed/reader
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -79,7 +77,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, "../static"),
+    os.path.join(SITE_ROOT, "../static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -120,14 +118,12 @@ ROOT_URLCONF = 'informed.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'informed.wsgi.application'
 
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     # '/Users/mattdinauta/proj/informed/informed/templates/',
-    os.path.join(PROJECT_ROOT, "../templates"),
+    os.path.join(SITE_ROOT, "../templates"),
 )
 
 INSTALLED_APPS = (
