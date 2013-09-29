@@ -16,10 +16,10 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+    url(r'^$', 'reader.views.home', name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('userena.urls')),
     url(r'^topic/starred/', 'reader.views.display_starred_articles'),
-    url(r'^index/', 'reader.views.home'),
     url(r'^topic/(?P<topic>.*)$', 'reader.views.reader'),
     url(r'^manage-feeds/', 'reader.views.manage_feeds', name='manage-feeds'),
     url(r'^delete-feeds/(?P<id>.*)$', 'reader.views.delete_feed', name='manage-feeds'),

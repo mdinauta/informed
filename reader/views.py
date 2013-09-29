@@ -99,11 +99,11 @@ def star_article(request, id):
     else:
         pass
 
-    return HttpResponseRedirect('/index')
+    return HttpResponseRedirect('')
 
 def run_get_new_articles(request, id):
     run()
 
-    return HttpResponseRedirect('/index')
+    return HttpResponseRedirect('')
 
 
