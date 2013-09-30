@@ -3,9 +3,9 @@ from time import mktime
 from operator import itemgetter
 
 import feedparser
-
 from django.db import models
 from django.contrib.auth.models import User
+
 from .models import feed, Article
 
 def get_articles(feeds):
@@ -44,7 +44,6 @@ def get_articles(feeds):
 
     return articles
 
-
 def run():
     from .models import feed, Article
     all_feeds = feed.objects.all().values('topic', 'id', 'feed_url')
@@ -73,5 +72,3 @@ def run():
         else:
             # print "already in db"
             pass
-
-# run()

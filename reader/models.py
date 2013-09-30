@@ -15,6 +15,7 @@ class feed(models.Model):
     def name(self):
         return self.name
 
+
 class Article(models.Model):
     feed = models.ForeignKey(feed)
     user = models.ForeignKey(User)
@@ -26,4 +27,3 @@ class Article(models.Model):
 
     def __unicode__(self):
         return self.title
-

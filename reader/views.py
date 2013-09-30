@@ -9,12 +9,14 @@ from django.views.generic import UpdateView, CreateView, DetailView
 
 from .forms import feed_form
 from .models import feed, Article
+
 from get_new_articles import run
 
 
 def home(request): # Should display when user is not logged in and visits informed.io
+
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
-        current_user = -1
+        current_user = 2
     else:
         current_user = request.user.id
     feeds_for_topics = feed.objects.filter(user=current_user).values('topic').distinct() # For sidebar, get each topic
@@ -25,7 +27,7 @@ def home(request): # Should display when user is not logged in and visits inform
 def reader(request, topic):
     
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
-        current_user = -1
+        current_user = 2
     else:
         current_user = request.user.id
     
@@ -47,7 +49,7 @@ def reader(request, topic):
 def display_starred_articles(request):
 
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
-        current_user = -1
+        current_user = 2
     else:
         current_user = request.user.id
 

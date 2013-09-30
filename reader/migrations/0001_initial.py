@@ -12,35 +12,31 @@ class Migration(SchemaMigration):
         db.create_table(u'reader_feed', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('feed_url', self.gf('django.db.models.fields.TextField')()),
+            ('topic', self.gf('django.db.models.fields.CharField')(default='news', max_length=1000)),
+            ('feed_url', self.gf('django.db.models.fields.CharField')(max_length=1000)),
         ))
         db.send_create_signal(u'reader', ['feed'])
 
-        # Adding model 'tag'
-        db.create_table(u'reader_tag', (
+        # Adding model 'Article'
+        db.create_table(u'reader_article', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('tag_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('feed', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['reader.feed'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('feed_title', self.gf('django.db.models.fields.CharField')(default='Feed title not available', max_length=5000)),
+            ('url', self.gf('django.db.models.fields.CharField')(max_length=5000)),
+            ('title', self.gf('django.db.models.fields.CharField')(default='Article title not available', max_length=5000)),
+            ('published_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('starred', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
-        db.send_create_signal(u'reader', ['tag'])
-
-        # Adding model 'feed_to_tag'
-        db.create_table(u'reader_feed_to_tag', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('feed_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['reader.feed'])),
-            ('tag_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['reader.tag'])),
-        ))
-        db.send_create_signal(u'reader', ['feed_to_tag'])
+        db.send_create_signal(u'reader', ['Article'])
 
 
     def backwards(self, orm):
         # Deleting model 'feed'
         db.delete_table(u'reader_feed')
 
-        # Deleting model 'tag'
-        db.delete_table(u'reader_tag')
-
-        # Deleting model 'feed_to_tag'
-        db.delete_table(u'reader_feed_to_tag')
+        # Deleting model 'Article'
+        db.delete_table(u'reader_article')
 
 
     models = {
@@ -80,22 +76,23 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'reader.feed': {
-            'Meta': {'object_name': 'feed'},
-            'feed_url': ('django.db.models.fields.TextField', [], {}),
+        u'reader.article': {
+            'Meta': {'object_name': 'Article'},
+            'feed': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['reader.feed']"}),
+            'feed_title': ('django.db.models.fields.CharField', [], {'default': "'Feed title not available'", 'max_length': '5000'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'published_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'starred': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'title': ('django.db.models.fields.CharField', [], {'default': "'Article title not available'", 'max_length': '5000'}),
+            'url': ('django.db.models.fields.CharField', [], {'max_length': '5000'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
-        u'reader.feed_to_tag': {
-            'Meta': {'object_name': 'feed_to_tag'},
-            'feed_id': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['reader.feed']"}),
+        u'reader.feed': {
+            'Meta': {'object_name': 'feed'},
+            'feed_url': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag_id': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['reader.tag']"})
-        },
-        u'reader.tag': {
-            'Meta': {'object_name': 'tag'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'tag_name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'topic': ('django.db.models.fields.CharField', [], {'default': "'news'", 'max_length': '1000'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }
 

@@ -14,7 +14,6 @@ class Migration(SchemaMigration):
             ('mugshot', self.gf('django.db.models.fields.files.ImageField')(max_length=100, blank=True)),
             ('privacy', self.gf('django.db.models.fields.CharField')(default='registered', max_length=15)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='my_profile', unique=True, to=orm['auth.User'])),
-            ('favourite_snack', self.gf('django.db.models.fields.CharField')(max_length=5)),
         ))
         db.send_create_signal(u'accounts', ['MyProfile'])
 
@@ -27,7 +26,6 @@ class Migration(SchemaMigration):
     models = {
         u'accounts.myprofile': {
             'Meta': {'object_name': 'MyProfile'},
-            'favourite_snack': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mugshot': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'blank': 'True'}),
             'privacy': ('django.db.models.fields.CharField', [], {'default': "'registered'", 'max_length': '15'}),

@@ -4,6 +4,7 @@ from django.conf.urls import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
+
 from reader import views
 
 
