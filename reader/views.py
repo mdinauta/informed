@@ -13,7 +13,7 @@ from .models import feed, Article
 from get_new_articles import run
 
 
-def home(request): # Should display when user is not logged in and visits informed.io
+def home(request): 
 
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
         current_user = 2

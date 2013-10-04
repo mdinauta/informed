@@ -4,11 +4,33 @@ from django.contrib.auth.models import User
 
 from reader.models import feed
 
+
 class Command(BaseCommand):
 
 	def handle(self, *args, **kwargs):
-		default_user = User.objects.get(id=2)
-		insert = feed.objects.create(user=default_user, topic='technology', feed_url='http://feeds.feedburner.com/TechCrunch/')
-		insert.save()
 
-		# self.stdout.write('Successfully created defaults')
+		default_user = User.objects.get(username='demo')
+		feed_dicts = [{'topic': 'technology', 'feed_url': 'http://feeds.feedburner.com/TechCrunch/'},
+					{'topic': 'technology', 'feed_url': 'http://feeds.feedburner.com/hacker-news-feed-50?format=xml'},
+					{'topic': 'pop culture', 'feed_url': 'http://feeds.gawker.com/gawker/full'},
+					{'topic': 'news', 'feed_url': 'http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'},
+					{'topic': 'programming', 'feed_url': 'http://www.reddit.com/r/django/.rss'},
+					{'topic': 'programming', 'feed_url': 'http://www.reddit.com/r/programming/.rss'},
+					{'topic': 'pop culture', 'feed_url': 'http://feeds.theonion.com/avclub/music/'},
+					{'topic': 'pop culture', 'feed_url': 'http://feeds.theonion.com/avclub/newswire/'},
+					{'topic': 'pop culture', 'feed_url': 'http://www.rottentomatoes.com/syndication/rss/in_theaters.xml'},
+					{'topic': 'pop culture', 'feed_url': 'http://www.rottentomatoes.com/syndication/rss/in_theaters.xml'},
+					{'topic': 'programming', 'feed_url': 'http://feeds.feedburner.com/nettuts'},
+					{'topic': 'programming', 'feed_url': 'http://www.reddit.com/r/python/.rss'}
+					]
+
+		for a in feed_dicts:
+			already_exists = feed.objects.filter(topic=a['topic'], feed_url=a['feed_url'])
+			if len(already_exists) == 0:
+				insert = feed.objects.create(user=default_user, topic=a['topic'], 
+											feed_url=a['feed_url'])
+				insert.save()
+			else:
+				pass
+
+		self.stdout.write('Successfully created defaults')
