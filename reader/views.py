@@ -16,9 +16,10 @@ from get_new_articles import run
 def home(request): 
 
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
-        current_user = 2
+        current_user = User.objects.get(username='demo')
     else:
         current_user = request.user.id
+
     feeds_for_topics = feed.objects.filter(user=current_user).values('topic').distinct() # For sidebar, get each topic
     starred_articles = Article.objects.filter(starred=True, user=current_user) 
 
@@ -27,16 +28,16 @@ def home(request):
 def reader(request, topic):
     
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
-        current_user = 2
+        current_user = User.objects.get(username='demo')
     else:
         current_user = request.user.id
     
     feeds_for_topics = feed.objects.filter(user=current_user).values('topic').distinct()
     feeds_for_articles = feed.objects.filter(topic=topic, user=current_user).values('id')
     starred_articles = Article.objects.filter(starred=True, user=current_user) 
-
     articles_unsorted = []
     articles = []
+
     for d in feeds_for_articles:
         articles_in_feed = Article.objects.filter(feed_id=d['id']).values()
         for article in articles_in_feed:
@@ -49,7 +50,7 @@ def reader(request, topic):
 def display_starred_articles(request):
 
     if request.user.id == None: # Get the currently logged in user. If there is not one, use AnonymousUser (demo)
-        current_user = 2
+        current_user = User.objects.get(username='demo')
     else:
         current_user = request.user.id
 
@@ -61,6 +62,7 @@ def display_starred_articles(request):
         'starred_articles': starred_articles})
 
 def manage_feeds(request):
+
     if request.POST:
         form = feed_form(request.POST)
         if form.is_valid():
@@ -75,19 +77,21 @@ def manage_feeds(request):
         return render(request, 'reader/manage_feeds.html', {'form': form, 'feeds': feeds})
 
 def delete_feed(request, id):
+
     current_user = request.user.id
     # select owner of feed. check to make sure owner is current logged in user, then delete. if not, 404
     feed_owner = feed.objects.get(id=id).user.id
 
     if current_user == feed_owner:
         feed.objects.filter(id=id).delete()
-        print "deleted"
+        # deleted
         return HttpResponseRedirect('/manage-feeds')
     else: 
-        print "REJECTED"
+        # REJECTED
         return HttpResponseRedirect('/manage-feeds')
 
 def star_article(request, id):
+
     a = Article.objects.get(id=id)
     current_user = request.user.id
     article_owner = Article.objects.get(id=id).user.id
@@ -95,11 +99,13 @@ def star_article(request, id):
     if current_user == article_owner:
         if a.starred == False:
             a.starred = True
+            # starred
         else:
             a.starred = False
         a.save()
     else:
         pass
+        # REJECTED
 
     return HttpResponseRedirect('')
 
@@ -108,4 +114,6 @@ def run_get_new_articles(request, id):
 
     return HttpResponseRedirect('')
 
+def signup_unavail(request):
 
+    return render(request, 'reader/signup_unavail.html')

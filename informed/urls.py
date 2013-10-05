@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     # not a public-facing URL. Going to this url runs script that parses feeds and adds new articles to db. cron hits url every hour
     url(r'^run-get-new-articles/(?P<id>.*)$', 'reader.views.run_get_new_articles', name='run-get-new-articles'),
     url(r'^star-article/(?P<id>.*)$', 'reader.views.star_article', name='star_article'),
+    url(r'^signup_unavail/', 'reader.views.signup_unavail'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

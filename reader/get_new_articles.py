@@ -5,6 +5,7 @@ from operator import itemgetter
 import feedparser
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import make_aware
 
 from .models import feed, Article
 
@@ -66,9 +67,10 @@ def run():
         a = Article.objects.filter(url=article[2], user=user_id)
         # print "checking...."
         if len(a) == 0:
-            # print "new article"
-            a = Article(feed_id=article[0], user=user_object, feed_title=article[1], url=article[2], title=article[3], published_date=article[4])
+            # new article
+            published_date = make_aware(article[4]) # still throws a warning. need to pass in timezone as well - look into this
+            a = Article(feed_id=article[0], user=user_object, feed_title=article[1], url=article[2], title=article[3], published_date=published_date)
             a.save()
         else:
-            # print "already in db"
+            # already in db
             pass
