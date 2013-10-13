@@ -27,11 +27,6 @@
 			</div>
 	{% endfor %}
 
-	{% if pages|length < 6 %}
-		{% show_pages %}
-	{% else %}
-		{% get_pages %}
-		{{ pages.first }} {{ pages.previous }} {{ pages.next }} {{ pages.last }}
-	{% endif %}
+	{% show_pages %}
 
 {% endblock %}
