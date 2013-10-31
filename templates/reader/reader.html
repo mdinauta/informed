@@ -18,10 +18,10 @@
                             <a href='/star-article/{{ article.id }}' id='not_starred_article'><i class='icon-star-empty'></i></a>
                     {% endif %}
                     <li class='feed_title'>{{ article.feed_title }}</li>
-                    {% if article.title|length < 80 %}
+                    {% if article.title|length < 70 %}
                         <a href="{{ article.url }}" class='article_title'>{{ article.title }}</a>
                 {% else %}
-                    <a href="{{ article.url }}" class='article_title'>{{ article.title|slice:"80" }}...</a>
+                    <a href="{{ article.url }}" class='article_title'>{{ article.title|slice:"70" }}...</a>
                 {% endif %}
                     <p class='published_date'>{{ article.published_date }}</p>
             </div>
