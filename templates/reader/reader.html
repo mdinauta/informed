@@ -9,24 +9,30 @@
 {% endblock %}
 
 {% block reader %}
+    <div class='reader'>
         {% paginate articles %}
-        {% for article in articles %}
-            <div class='article'>
+            {% for article in articles %}
+            
+                <div class='article'>
                     {% if article.starred == True %}
                             <a href='/star-article/{{ article.id }}' id='starred_article'><i class='icon-star'></i></a>
                     {% else %}
                             <a href='/star-article/{{ article.id }}' id='not_starred_article'><i class='icon-star-empty'></i></a>
                     {% endif %}
-                    <li class='feed_title'>{{ article.feed_title }}</li>
-                    {% if article.title|length < 70 %}
-                        <a href="{{ article.url }}" class='article_title'>{{ article.title }}</a>
-                {% else %}
-                    <a href="{{ article.url }}" class='article_title'>{{ article.title|slice:"70" }}...</a>
-                {% endif %}
-                    <p class='published_date'>{{ article.published_date }}</p>
-            </div>
-        {% endfor %}
 
+                    <p class='feed_title'>{{ article.feed_title }}</p>
+
+                    <div class='article_title_div'>
+                    <a href="{{ article.url }}" class='article_title'>{{ article.title }}</a>
+                    </div>
+
+                    <div class='published_date'>
+                    <p>{{ article.published_date }}</p>
+                    </div>
+
+                </div>
+
+            {% endfor %}
         {% show_pages %}
-
+    </div>
 {% endblock %}
